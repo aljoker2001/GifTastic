@@ -1,0 +1,65 @@
+body {
+    margin: 10px;
+}
+
+form {
+    line-height: 1.6;
+    font-size: 30px;
+    font-family: 'Oxygen', sans-serif;
+    color: darkcyan;
+}
+
+button {
+    background-color: darkcyan;
+    color: white;
+    margin: 0 5px;
+}
+
+img {
+    padding: 10px 0;
+}
+
+.wrapper {
+
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    padding-top: 10px;
+}
+
+.gif {
+    width: auto;
+    padding: 15px 3px;
+}
+
+#button-display {
+    width: 100%;
+    padding: 20px 0;
+    border-bottom: 1px solid darkcyan;
+}
+
+#image-display {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+    color: darkcyan;
+    font-family: 'Oxygen', sans-serif;
+    border-right: 1px solid darkcyan;
+}
+
+#button-creation {
+    width: 25%;
+    padding-left: 10px;
+}
+
+#entryField {
+    width: 75%;
+}
+
+#submit {
+    background-color: darkcyan;
+    color: white;
+}
