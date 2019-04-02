@@ -7,6 +7,7 @@ var game;
 var queryURL;
 var movingGif = [];
 
+// Creates buttons at top of page from the videoGames array
 const buttonCreation = () => {
     buttonField.innerHTML = "";
     for (let videoGame of videoGames) {
@@ -18,6 +19,7 @@ const buttonCreation = () => {
     }
 }
 
+// When entering a new game in the form on the right of the page, that value is entered into the buttonCreation function
 const addGame = () => {
     event.preventDefault();
     var game = document.getElementById("entryField").value;
@@ -28,11 +30,13 @@ const addGame = () => {
     }
 }
 
+// When a button at the top of the page is clicked, this function pulls ten gifs (still image) and posts them in the field on the left of the page
 var getGifs = function (event) {
     game = event.target.dataset.name.replace(" ", "+");
     queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${APIKey}&q=${game}&limit=10`;
-
+// Checks for feature
     if (event.target.tagName === "BUTTON") {
+        // runs fetch for getting the gifs
         if (window.fetch) {
             fetch(queryURL, {
                 method: "GET"
@@ -55,6 +59,7 @@ var getGifs = function (event) {
                         imageDisplay.prepend(gameDiv);
                     }
                 })
+        // If fetch is not available, this runs XHR
         } else {
             var xhr = new XMLHttpRequest();
 
@@ -89,6 +94,7 @@ var getGifs = function (event) {
     }
 }
 
+// changes the source of the gifs from still to moving or vice versa
 const toggleGif = (event) => {
     if (event.target.tagName === "IMG") {
         if (window.fetch) {
@@ -98,11 +104,14 @@ const toggleGif = (event) => {
                 .then(result => result.json())
                 .then(response => {
                     console.log(event.target.src);
+                    // assigns the gif URL to the result variable
                     var result = event.target.src;
+                    // looks for moving gif to toggle it back to still gif
                     if (result.indexOf("200.gif") !== -1) {
                         var toggle = result.replace("200.gif", "200_s.gif");
                         console.log(toggle);
                         event.target.src = toggle;
+                    // looks for still gif to turn it back to moving gif
                     } else if (result.indexOf("200_s.gif") !== -1) {
                         var toggle = result.replace("200_s.gif", "200.gif");
                         event.target.src = toggle;
@@ -140,7 +149,7 @@ const toggleGif = (event) => {
     }
 }
 
-
+// Event listeners for the respective button clicks
 submit.addEventListener("click", addGame);
 buttonField.addEventListener("click", getGifs);
 imageDisplay.addEventListener("click", toggleGif);
