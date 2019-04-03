@@ -63,3 +63,36 @@ img {
     background-color: darkcyan;
     color: white;
 }
+
+@media screen and (max-width: 980px) {
+
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 640px) {
+    img {
+        width: 80%;
+    }
+    
+    .row {
+        flex-wrap: wrap-reverse;
+    }
+
+    #button-creation {
+        width: 100%;
+        text-align: center;
+    }
+
+    #image-display {
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    #button-display {
+        text-align: center;
+    }
+}
