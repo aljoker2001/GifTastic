@@ -90,12 +90,14 @@ img {
     #button-creation {
         width: 100%;
         text-align: center;
+        border-bottom: 1px solid darkcyan;
     }
 
     #image-display {
         justify-content: center;
         width: 100%;
         text-align: center;
+        border-right: none;
     }
 
     #button-display {
