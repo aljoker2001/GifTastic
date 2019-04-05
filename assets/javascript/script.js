@@ -34,7 +34,7 @@ const addGame = () => {
 var getGifs = function (event) {
     game = event.target.dataset.name.replace(" ", "+");
     queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${APIKey}&q=${game}&limit=10`;
-// Checks for feature
+    // Checks for feature
     if (event.target.tagName === "BUTTON") {
         // runs fetch for getting the gifs
         if (window.fetch) {
@@ -59,24 +59,26 @@ var getGifs = function (event) {
                         imageDisplay.prepend(gameDiv);
                     }
                 })
-        // If fetch is not available, this runs XHR
+            // If fetch is not available, this runs XHR
         } else {
-            var xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
 
             xhr.open("GET", queryURL);
 
             xhr.onload = (event) => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        parsed = JSON.stringify(xhr.responseText);
+                        console.log(xhr.responseText);
+                        parsed = JSON.parse(xhr.responseText);
+                        var final = parsed.data;
                         imageDisplay.innerHTML = "";
-                        for (var i = 0; i < parsed.length; i++) {
+                        for (var i = 0; i < final.length; i++) {
                             var gameDiv = document.createElement("div");
                             gameDiv.classList.add("gif");
                             var p = document.createElement("p");
-                            p.innerText = `Rating: ${parsed[i].rating.toUpperCase()}`;
+                            p.innerText = `Rating: ${final[i].rating.toUpperCase()}`;
                             var gameImage = document.createElement("img");
-                            gameImage.setAttribute("src", parsed[i].images.fixed_height.url);
+                            gameImage.setAttribute("src", final[i].images.fixed_height_still.url);
                             gameDiv.appendChild(p);
                             gameDiv.appendChild(gameImage);
                             document.querySelector("#image-display").prepend(gameDiv);
@@ -111,7 +113,7 @@ const toggleGif = (event) => {
                         var toggle = result.replace("200.gif", "200_s.gif");
                         console.log(toggle);
                         event.target.src = toggle;
-                    // looks for still gif to turn it back to moving gif
+                        // looks for still gif to turn it back to moving gif
                     } else if (result.indexOf("200_s.gif") !== -1) {
                         var toggle = result.replace("200_s.gif", "200.gif");
                         event.target.src = toggle;
@@ -122,10 +124,10 @@ const toggleGif = (event) => {
 
             xhr.open("GET", queryURL);
 
-            xhr.onload = (event) => {
+            xhr.onload = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        parsed = JSON.stringify(xhr.responseText);
+                        parsed = JSON.parse(xhr.responseText);
                         console.log(event.target.src);
                         var result = event.target.src;
                         if (result.indexOf("200.gif") !== -1) {
@@ -141,11 +143,12 @@ const toggleGif = (event) => {
                     console.error(xhr.responseText);
                 }
             }
+
+            xhr.onerror = (event) => {
+                console.error(xhr.responseText);
+            }
+            xhr.send();
         }
-        xhr.onerror = (event) => {
-            console.error(xhr.responseText);
-        }
-        xhr.send();
     }
 }
 
